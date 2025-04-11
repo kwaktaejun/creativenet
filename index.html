@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>마스터시트 직접입력 (엑셀형)</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        input {
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h2>📋 마스터시트 엑셀형 입력</h2>
+    <form action="/generate" method="post">
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>구분</th><th>계약여부</th><th>식별번호</th><th>계약금액</th><th>제품모델명</th>
+                    <th>품명</th><th>모델명</th><th>규격</th><th>수량</th><th>원산지</th>
+                    <th>제품원가</th><th>원천제조사</th><th>비고</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                <tr>
+                    <td><input name="구분[]"></td>
+                    <td><input name="계약여부[]"></td>
+                    <td><input name="식별번호[]"></td>
+                    <td><input name="계약금액[]"></td>
+                    <td><input name="제품모델명[]"></td>
+                    <td><input name="품명[]"></td>
+                    <td><input name="모델명[]"></td>
+                    <td><input name="규격[]"></td>
+                    <td><input name="수량[]"></td>
+                    <td><input name="원산지[]"></td>
+                    <td><input name="제품원가[]"></td>
+                    <td><input name="원천제조사[]"></td>
+                    <td><input name="비고[]"></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <button type="button" onclick="addRow()">➕ 행 추가</button>
+        <input type="submit" value="엑셀 다운로드">
+    </form>
+
+    <script>
+        function addRow() {
+            const tbody = document.getElementById("tbody");
+            const row = document.createElement("tr");
+            for (let i = 0; i < 13; i++) {
+                const cell = document.createElement("td");
+                const input = document.createElement("input");
+                input.name = tbody.rows[0].cells[i].firstChild.name;
+                cell.appendChild(input);
+                row.appendChild(cell);
+            }
+            tbody.appendChild(row);
+        }
+    </script>
+</body>
+</html>
