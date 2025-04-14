@@ -1,1 +1,0 @@
-// creativenet-web/next.config.js placeholder
