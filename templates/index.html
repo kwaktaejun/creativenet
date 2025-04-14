@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -10,8 +9,8 @@
     </style>
 </head>
 <body>
-    <h2>마스터시트 입력</h2>
-    <form method="post">
+    <h2>📋 마스터시트 입력</h2>
+    <form method="post" enctype="multipart/form-data">
         <label>제품군 선택:
             <select name="category">
                 <option value="영상감시">영상감시</option>
@@ -30,22 +29,25 @@
             </thead>
             <tbody>
                 <tr class="example-row">
-                    <td>주자재</td><td>O</td><td>24061854</td><td>1,999,000</td><td>EX03B</td>
-                    <td>보안카메라</td><td>CRE-CW21821UR</td><td>Bullet Type, 2M, IR</td><td>1</td>
-                    <td>대한민국</td><td>구성품</td><td>0</td><td>-</td><td>-</td><td>-</td><td>-</td>
+                    <td>주자재</td><td>O</td><td>24061854</td><td>1,999,000</td>
+                    <td>EX03B</td><td>보안카메라</td><td>CRE-CW21821UR</td><td>Bullet Type, 2M, IR</td>
+                    <td>1</td><td>대한민국</td><td>구성품</td><td>0</td><td>-</td><td>-</td><td>-</td><td>-</td>
                 </tr>
                 <tr>
-                    <td><input name="구분"></td><td><input name="계약여부"></td><td><input name="식별번호"></td>
-                    <td><input name="계약금액"></td><td><input name="제품모델명"></td><td><input name="품명"></td>
-                    <td><input name="모델명"></td><td><input name="규격"></td><td><input name="수량"></td>
-                    <td><input name="원산지"></td><td><input name="구성종류"></td><td><input name="제품원가"></td>
+                    <td><input name="구분"></td><td><input name="계약여부"></td><td><input name="식별번호"></td><td><input name="계약금액"></td>
+                    <td><input name="제품모델명"></td><td><input name="품명"></td><td><input name="모델명"></td><td><input name="규격"></td>
+                    <td><input name="수량"></td><td><input name="원산지"></td><td><input name="구성종류"></td><td><input name="제품원가"></td>
                     <td><input name="원천제조사"></td><td><input name="수익률"></td><td><input name="비고"></td><td><input name="메모"></td>
                 </tr>
             </tbody>
         </table>
         <button type="button" onclick="addRow()">+ 행 추가</button><br><br>
 
-        <label>업로드 메모:<br>
+        <label>📁 엑셀 업로드:
+            <input type="file" name="excel_file" accept=".xlsx">
+        </label><br><br>
+
+        <label>📝 업로드 메모:<br>
             <textarea name="memo" rows="4" cols="80" placeholder="업로드에 대한 설명 또는 특이사항을 입력해 주세요."></textarea>
         </label><br><br>
 
