@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>마스터시트 데이터 입력</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         input[type=text] { width: 90px; }
         .title { font-weight: bold; padding-top: 10px; }
@@ -23,30 +22,32 @@
         <table border="1" id="dataTable">
             <thead>
                 <tr>
-                    <th>구분</th><th>계약여부</th><th>식별번호</th><th>계약금액</th>
-                    <th>제품모델명</th><th>품명</th><th>모델명</th><th>규격</th><th>수량</th>
-                    <th>원산지</th><th>구성종류</th><th>제품원가</th><th>원천제조사</th><th>수익률</th><th>비고</th>
+                    <th>구분</th><th>계약여부</th><th>식별번호</th><th>계약금액</th><th>제품모델명</th><th>품명</th><th>모델명</th>
+                    <th>규격</th><th>수량</th><th>원산지</th><th>구성종류</th><th>제품원가</th><th>원천제조사</th><th>수익률</th><th>비고</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="example-row" style="background-color: #f1f1f1;">
-                    <td>주자재</td><td>O</td><td>24061854</td><td>1,999,000</td>
-                    <td>EX03B</td><td>보안용카메라</td><td>CRE-CW21821UR</td><td>Bullet Type, 2M, IR</td>
-                    <td>1</td><td>대한민국</td><td>구성품</td><td>0</td><td>-</td><td>30.2</td><td>-</td>
-                </tr>
                 <tr>
-                    <td><input name="구분"></td><td><input name="계약여부"></td><td><input name="식별번호"></td><td><input name="계약금액"></td>
-                    <td><input name="제품모델명"></td><td><input name="품명"></td><td><input name="모델명"></td><td><input name="규격"></td>
-                    <td><input name="수량"></td><td><input name="원산지"></td><td><input name="구성종류"></td><td><input name="제품원가"></td>
-                    <td><input name="원천제조사"></td><td><input name="수익률"></td><td><input name="비고"></td>
+                    <td><input type="text" name="구분"></td>
+                    <td><input type="text" name="계약여부"></td>
+                    <td><input type="text" name="식별번호"></td>
+                    <td><input type="text" name="계약금액"></td>
+                    <td><input type="text" name="제품모델명"></td>
+                    <td><input type="text" name="품명"></td>
+                    <td><input type="text" name="모델명"></td>
+                    <td><input type="text" name="규격"></td>
+                    <td><input type="text" name="수량"></td>
+                    <td><input type="text" name="원산지"></td>
+                    <td><input type="text" name="구성종류"></td>
+                    <td><input type="text" name="제품원가"></td>
+                    <td><input type="text" name="원천제조사"></td>
+                    <td><input type="text" name="수익률"></td>
+                    <td><input type="text" name="비고"></td>
                 </tr>
             </tbody>
         </table>
         <br>
         <button type="button" onclick="addRow()">➕ 행 추가</button><br><br>
-
-        <label class="title">엑셀 파일 업로드:</label><br>
-        <input type="file" id="excelFileInput" accept=".xlsx"><br><br>
 
         <label class="title">업로드 메모:</label><br>
         <textarea name="업로드메모" rows="4" cols="100" placeholder="업로드에 대한 설명 또는 특이사항을 입력해 주세요."></textarea><br><br>
@@ -55,30 +56,13 @@
     </form>
 
     <script>
-        function addRow(data=[]) {
-            const table = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
-            const row = table.rows[1].cloneNode(true);
-            const inputs = row.getElementsByTagName("input");
-            for (let i = 0; i < inputs.length; i++) {
-                inputs[i].value = data[i] || "";
-            }
-            table.appendChild(row);
+        function addRow() {
+            const table = document.getElementById("dataTable").getElementsByTagName('tbody')[0];
+            const newRow = table.rows[0].cloneNode(true);
+            const inputs = newRow.getElementsByTagName("input");
+            for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
+            table.appendChild(newRow);
         }
-
-        document.getElementById("excelFileInput").addEventListener("change", function (e) {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onload = function (evt) {
-                const data = new Uint8Array(evt.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
-                const sheet = workbook.Sheets[workbook.SheetNames[0]];
-                const json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-                for (let i = 1; i < json.length; i++) {
-                    addRow(json[i]);
-                }
-            };
-            reader.readAsArrayBuffer(file);
-        });
     </script>
 </body>
 </html>
