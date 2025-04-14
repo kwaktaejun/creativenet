@@ -8,7 +8,33 @@
         input[type=text] { width: 90px; }
         .title { font-weight: bold; padding-top: 10px; }
     </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js">
+    document.getElementById("excelFileInput").addEventListener("change", function (e) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function (evt) {
+            const data = new Uint8Array(evt.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            const json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+            for (let i = 1; i < json.length; i++) {
+                const row = json[i];
+                const table = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
+                const newRow = table.rows[0].cloneNode(true);
+                const inputs = newRow.getElementsByTagName("input");
+                for (let j = 0; j < inputs.length && j < row.length; j++) {
+                    inputs[j].value = row[j];
+                }
+                table.appendChild(newRow);
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    });
+</script>
+
 </head>
+
 <body>
     <h2>📋 마스터시트 데이터 입력</h2>
     <form method="POST" action="/download_excel">
@@ -52,7 +78,11 @@
         <label class="title">업로드 메모:</label><br>
         <textarea name="업로드메모" rows="4" cols="100" placeholder="업로드에 대한 설명 또는 특이사항을 입력해 주세요."></textarea><br><br>
 
-        <input type="submit" value="📥 엑셀로 다운로드">
+        
+    <label class="title">엑셀 파일 업로드:</label><br>
+    <input type="file" id="excelFileInput" accept=".xlsx"><br><br>
+    <input type="submit" value="📥 엑셀로 다운로드">
+
     </form>
 
     <script>
@@ -63,6 +93,29 @@
             for (let i = 0; i < inputs.length; i++) inputs[i].value = "";
             table.appendChild(newRow);
         }
-    </script>
+    
+    document.getElementById("excelFileInput").addEventListener("change", function (e) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function (evt) {
+            const data = new Uint8Array(evt.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            const json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+            for (let i = 1; i < json.length; i++) {
+                const row = json[i];
+                const table = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
+                const newRow = table.rows[0].cloneNode(true);
+                const inputs = newRow.getElementsByTagName("input");
+                for (let j = 0; j < inputs.length && j < row.length; j++) {
+                    inputs[j].value = row[j];
+                }
+                table.appendChild(newRow);
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    });
+</script>
+
 </body>
 </html>
